@@ -13,7 +13,7 @@ public class CapabilitiesHelper {
     private String class_PV = "10 QKQ1.191215.002";
     private String class_AP = "org.wikipedia";
     private String class_AA = ".main.MainActivity";
-    private String class_APP = "/Users/a.vagin/Desktop/JavaAppium/apks/org.wikipedia_50355.apk";
+    private String class_APP = "/Users/a.vagin/Desktop/JavaAppium/apks/org.wikipedia.apk";
     private String class_AT = "Appium";
 
 
