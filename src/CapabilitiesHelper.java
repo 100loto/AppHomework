@@ -1,6 +1,7 @@
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -95,6 +96,14 @@ public class CapabilitiesHelper {
     {
         WebElement element = waitForElementPresent(by, error_message, timeoutInSeconds);
         element.clear();
+        return element;
+    }
+
+    public WebElement assertElementHasText(By by, String expected_text, long timeoutInSecond)
+    {
+        WebElement element = waitForElementPresent(by, expected_text, timeoutInSecond);
+        String actual_text = element.getAttribute("text");
+        Assert.assertEquals("No words", expected_text, actual_text);
         return element;
     }
 

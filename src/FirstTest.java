@@ -9,6 +9,16 @@ public class FirstTest extends CapabilitiesHelper{
 
 
     @Test
+    public void testAssertTextInInput()
+    {
+        assertElementHasText(
+                By.xpath("//*[@class='android.widget.TextView']"),
+                "Search Wikipedia",
+                15
+        );
+    }
+
+    @Test
     public void TestCancelSearch()
     {
         waitForElementAndSendKeys(
