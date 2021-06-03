@@ -103,7 +103,7 @@ public class CapabilitiesHelper {
     {
         WebElement element = waitForElementPresent(by, expected_text, timeoutInSecond);
         String actual_text = element.getAttribute("text");
-        Assert.assertEquals("No words", expected_text, actual_text);
+        Assert.assertEquals("Element empty (words)", expected_text, actual_text);
         return element;
     }
 
