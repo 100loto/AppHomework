@@ -4,9 +4,45 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import sun.security.util.Length;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class FirstTest extends CapabilitiesHelper{
+
+//Написать тест, который делает поиск по какому-то слову. Например, JAVA. Затем убеждается, что в каждом результате поиска есть это слово.
+// 1. Поиск
+// 2. Список выдачи
+// 3n . Перебор выдачи на наличие совпадения "Java"
+// resource-id	org.wikipedia:id/page_list_item_title
+// //*[@resource-id='org.wikipedia:id/page_list_item_title']//*[@class='android.view.ViewGroup']
+
+
+    @Test
+    public void testSearchResultContainsSearchRequest()
+    {
+        waitForElementAndSendKeys(
+                By.id("org.wikipedia:id/search_container"),
+                "Java",
+                "Cannot find search input",
+                10
+        );
+        waitForElementPresent(
+                By.xpath("//*[@resource-id='org.wikipedia:id/search_results_list']//*[@text='Object-oriented programming language']"),
+                "Cannot find 'Object-oriented programming language' topic searching by 'Java'",
+                10
+        );
+        List <WebElement> search_results = driver.findElementsByXPath("//*[@resource-id='org.wikipedia:id/page_list_item_title']");
+
+        for (int i=0; i<search_results.size(); i++){
+            String words = search_results.get(i).getAttribute("text");
+            assert words.contains("Java");
+        }
+        }
+
+
+
+
 
 
     @Test
