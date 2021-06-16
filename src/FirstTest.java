@@ -20,6 +20,165 @@ public class FirstTest extends CapabilitiesHelper{
 
 
     @Test
+    public void testTwoArticlesToListAndDeleteOne()
+    {
+        waitForElementAndSendKeys(
+                By.id("org.wikipedia:id/search_container"),
+                "Java",
+                "Cannot find search input",
+                10
+        );
+        waitForElementAndClick(
+                By.xpath("//*[@resource-id='org.wikipedia:id/search_results_list']//*[@text='Island of Indonesia']"),
+                "Cannot find article java island",
+                10
+        );
+        waitForElementPresent(
+                By.id("org.wikipedia:id/view_page_title_text"),
+                "Cannot find title",
+                10
+        );
+        waitForElementAndClick(
+                By.xpath("//android.widget.ImageView[@content-desc='More options']"),
+                "Cannot find add_to_bm button",
+                10
+        );
+        waitForElementAndClick(
+                By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.ListView/android.widget.LinearLayout[3]/android.widget.RelativeLayout/android.widget.TextView"),
+                "Cannot find option to add read_list",
+                10
+        );
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/onboarding_button"),
+                "Cannot find GOT_IT button",
+                5
+        );
+        waitForElementAndClear(
+                By.id("org.wikipedia:id/text_input"),
+                "Cannot find text input to set folder name",
+                5
+        );
+
+        String name_of_folder = "Test folder";
+        waitForElementAndSendKeys(
+                By.id("org.wikipedia:id/text_input"),
+                name_of_folder,
+                "Cannot put text in yo thr input for set folder name",
+                5
+        );
+        waitForElementAndClick(
+                By.id("android:id/button1"),
+                "Cannot find ok button",
+                5
+        );
+        waitForElementAndClick(
+                By.xpath("//android.widget.ImageButton[@content-desc='Navigate up']"),
+                "Cannot close article, cannot find X link",
+                20
+        );
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/search_container"),
+                "Cannot click search input",
+                5
+        );
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/voice_search_button"),
+                "Cannot find clear search button",
+                5
+        );
+        waitForElementAndClick(
+                By.id("android:id/button1"),
+                "Cannot find ok button",
+                5
+        );
+        waitForElementAndSendKeys(
+                By.id("org.wikipedia:id/search_src_text"),
+                "Linkin park",
+                "Cannot find search input",
+                10
+        );
+        waitForElementAndClick(
+                By.xpath("//*[@resource-id='org.wikipedia:id/search_results_list']//*[@text='American rock band']"),
+                "Cannot find article American alternative rock band",
+                10
+        );
+        String title_from_NotDelete_article_before = waitForElementAndGetAttribute(
+                By.id("org.wikipedia:id/view_page_title_text"),
+                "text",
+                "Cannot find title of article",
+                15
+        );
+        waitForElementAndClick(
+                By.xpath("//android.widget.ImageView[@content-desc='More options']"),
+                "Cannot find add_to_bm button",
+                10
+        );
+        waitForElementAndClick(
+                By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.ListView/android.widget.LinearLayout[3]/android.widget.RelativeLayout/android.widget.TextView"),
+                "Cannot find option to add read_list",
+                10
+        );
+        waitForElementAndClick(
+                By.xpath("//*[@text='Test folder']"),
+                "Cannot find Test folder",
+                10
+        );
+        waitForElementAndClick(
+                By.xpath("//android.widget.ImageButton[@content-desc='Navigate up']"),
+                "Cannot close article, cannot find X link",
+                20
+        );
+        waitForElementAndClick(
+                By.xpath("//android.widget.FrameLayout[@content-desc='My lists']"),
+                "Cannot find navigate button to My List",
+                20
+        );
+        waitForElementAndClick(
+                By.xpath("//*[@text='org.wikipedia:id/item_title']"),
+                "Cannot find navigate button to My List",
+                20
+        );
+        swipeElementToLeft(
+                By.xpath("//*[@text='Java']"),
+                "Cannot find saved article"
+        );
+        waitForElementNotPresent(
+                By.xpath("//*[@text='Java']"),
+                "Cannot delete article",
+                5
+        );
+        int amount_of_search_results = getAmountOfElements(
+                By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_container']")
+        );
+        Assert.assertTrue(
+                "We found too few results!",
+                amount_of_search_results == 1
+        );
+        waitForElementPresent(
+                By.xpath("//*[@text='Linkin Park']"),
+                ""
+        );
+        waitForElementAndClick(
+                By.xpath("//*[@text='Linkin Park']"),
+                "",
+                5
+        );
+        String title_from_NotDelete_article_after = waitForElementAndGetAttribute(
+                By.id("org.wikipedia:id/view_page_title_text"),
+                "text",
+                "Cannot find title of article",
+                15
+        );
+        Assert.assertEquals(
+                "Article title deference",
+                title_from_NotDelete_article_before,
+                title_from_NotDelete_article_after
+        );
+        
+    }
+
+
+    @Test
     public void testCheckSearchArticleInBackground()
     {
         waitForElementAndSendKeys(
@@ -148,7 +307,6 @@ public class FirstTest extends CapabilitiesHelper{
     public void testFirstArticleToMyList()
     {
         waitForElementAndSendKeys(
-//                By.xpath("//*[@resource-id='org.wikipedia:id/search_src_text']//*[@text='Search Wikipedia']"),
                 By.id("org.wikipedia:id/search_container"),
                 "Java",
                 "Cannot find search input",
