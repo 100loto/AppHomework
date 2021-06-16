@@ -19,6 +19,29 @@ public class FirstTest extends CapabilitiesHelper{
 // //*[@resource-id='org.wikipedia:id/page_list_item_title']//*[@class='android.view.ViewGroup']
 
 
+
+    @Test
+    public void testAssertTitleWithoutWait()
+    {
+        String search_line = "Java";
+        waitForElementAndSendKeys(
+                By.id("org.wikipedia:id/search_container"),
+                search_line,
+                "Cannot find search input",
+                10
+        );
+        waitForElementAndClick(
+                By.xpath("//*[@resource-id='org.wikipedia:id/search_results_list']//*[@text='Object-oriented programming language']"),
+                "Cannot find article java island",
+                10
+        );
+        assertElementPresent(
+                By.id("org.wikipedia:id/view_page_title_text"),
+                "Article title not found"
+        );
+    }
+
+
     @Test
     public void testTwoArticlesToListAndDeleteOne()
     {
@@ -174,7 +197,7 @@ public class FirstTest extends CapabilitiesHelper{
                 title_from_NotDelete_article_before,
                 title_from_NotDelete_article_after
         );
-        
+
     }
 
 
