@@ -6,6 +6,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -53,6 +54,7 @@ public class CapabilitiesHelper {
         capabilities.setCapability("app",class_APP);
 
         driver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
+        driver.rotate(ScreenOrientation.PORTRAIT);
 
 //        waitForElementAndClick(
 //                By.id("org.wikipedia:id/fragment_onboarding_skip_button"),
