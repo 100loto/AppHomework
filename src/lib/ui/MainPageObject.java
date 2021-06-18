@@ -13,6 +13,9 @@ import java.util.List;
 
 public class MainPageObject {
 
+    private static final String
+            TITLE = "org.wikipedia:id/view_page_title_text";
+
     protected AppiumDriver driver;
 
     public MainPageObject(AppiumDriver driver)
@@ -136,6 +139,18 @@ public class MainPageObject {
             String default_message = "An element '" + by.toString() + "' supposed to be not present";
             throw new AssertionError(default_message + " " + error_message);
         }
+    }
+
+
+    public WebElement waitForTitleElement()
+    {
+        return this.waitForElementPresent(By.id(TITLE), "Cannot find article title on page", 15);
+    }
+
+    public String getArticleTitle()
+    {
+        WebElement title_element = waitForTitleElement();
+        return title_element.getAttribute("text");
     }
 
     public void assertElementPresent(By by, String error_message)

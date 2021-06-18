@@ -7,7 +7,9 @@ public class MyListPageObject extends MainPageObject{
 
     public static final String
             FOLDER_BY_NAME_TPL = "//*[@text='{FOLDER_NAME}']",
-            ARTICLE_BY_TITLE_TPL = "//*[@text='{TITLE}']";
+            ARTICLE_BY_TITLE_TPL = "//*[@text='{TITLE}']",
+            ARTICLES_IN_FOLDER = "//*[@resource-id='org.wikipedia:id/page_list_item_container']";
+
 
     private static String getFolderXpathByName(String name_of_folder)
     {
@@ -56,6 +58,12 @@ public class MyListPageObject extends MainPageObject{
                 "Cannot find saved article"
         );
         this.waitForArticleToDisappearByTitle(article_title);
+    }
+
+    public int getAmountOfArticlesInFolder()
+    {
+        int articles_amount = this.getAmountOfElements(By.xpath(ARTICLES_IN_FOLDER));
+        return articles_amount;
     }
 
 }

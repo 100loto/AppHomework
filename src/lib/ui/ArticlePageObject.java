@@ -6,6 +6,9 @@ import org.openqa.selenium.WebElement;
 
 public class ArticlePageObject extends MainPageObject{
 
+    public static final String
+            FOLDER_BY_NAME_TPL = "//*[@text='{FOLDER_NAME}']";
+
     private static final String
             TITLE = "org.wikipedia:id/view_page_title_text",
             FOOTER_ELEMENT = "//*[@text='View page in browser']",
@@ -24,16 +27,7 @@ public class ArticlePageObject extends MainPageObject{
         super(driver);
     }
 
-    public WebElement waitForTitleElement()
-    {
-        return this.waitForElementPresent(By.id(TITLE), "Cannot find article title on page", 15);
-    }
 
-    public String getArticleTitle()
-    {
-        WebElement title_element = waitForTitleElement();
-        return title_element.getAttribute("text");
-    }
 
     public void swipeToFooter()
     {
@@ -79,6 +73,54 @@ public class ArticlePageObject extends MainPageObject{
         );
     }
 
+    public void addArticleToCreatedMyList(String name_of_folder)
+    {
+        this.waitForElementAndClick(
+                By.xpath(OPTIONS_BUTTON),
+                "Cannot find add_to_bm button",
+                10
+        );
+        this.waitForElementAndClick(
+                By.xpath(OPTIONS_ADD_TO_MY_LIST_BUTTON),
+                "Cannot find option to add read_list",
+                10
+        );
+        this.waitForElementAndClick(
+                By.xpath(FOLDER_BY_NAME_TPL.replace("FOLDER_NAME", name_of_folder)),
+                "Cannot find Test folder",
+                10
+        );
+
+
+
+
+
+
+
+
+        this.waitForElementAndClick(
+                By.id(ADD_TO_MY_LIST_OVERLAY),
+                "Cannot find GOT_IT button",
+                5
+        );
+        this.waitForElementAndClear(
+                By.id(MY_LIST_NAME_INPUT),
+                "Cannot find text input to set folder name",
+                5
+        );
+        this.waitForElementAndSendKeys(
+                By.id(MY_LIST_NAME_INPUT),
+                name_of_folder,
+                "Cannot put text in yo thr input for set folder name",
+                5
+        );
+        this.waitForElementAndClick(
+                By.id(MY_LIST_OK_BUTTON),
+                "Cannot find ok button",
+                5
+        );
+    }
+
     public void closeArticle()
     {
         this.waitForElementAndClick(
@@ -86,6 +128,20 @@ public class ArticlePageObject extends MainPageObject{
                 "Cannot close article, cannot find X link",
                 20
         );
+    }
+
+    public void assertTitlePresentInstantly()
+    {
+    this.assertElementPresent(
+            By.id(TITLE),
+            "Article title not found instantly"
+            );
+    }
+
+    public String saveArticleTitle()
+    {
+        String article_title = this.waitForElementAndGetAttribute(By.id(TITLE), "text", "Cannot find title of article", 15);
+        return article_title;
     }
 
 }

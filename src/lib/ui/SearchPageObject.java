@@ -11,7 +11,9 @@ public class SearchPageObject extends MainPageObject
             SEARCH_CANCEL_BUTTON = "org.wikipedia:id/search_close_btn",
             SEARCH_RESULT_BY_SUBSTRING_TPL = "//*[@resource-id='org.wikipedia:id/search_results_list']//*[@text='{SUBSTRING}']",
             SEARCH_RESULT_ELEMENT = "//*[@resource-id='org.wikipedia:id/fragment_search_results']/*[@resource-id='org.wikipedia:id/search_results_container']",
-            SEARCH_EMPTY_RESULT_ELEMENT = "//*[@text='No results found']";
+            SEARCH_EMPTY_RESULT_ELEMENT = "//*[@text='No results found']",
+            SEARCH_CLEAR_HISTORY_BUTTON = "org.wikipedia:id/voice_search_button",
+            POPUP_OK_BUTTON = "android:id/button1";
 
     public SearchPageObject(AppiumDriver driver)
     {
@@ -82,6 +84,12 @@ public class SearchPageObject extends MainPageObject
     public void assertThereIsNoResultOfSearch()
     {
         this.assertElementNotPresent(By.xpath(SEARCH_RESULT_ELEMENT), "We supposed not to find any results");
+    }
+
+    public void clearSearchHistory()
+    {
+        this.waitForElementAndClick(By.id(SEARCH_CLEAR_HISTORY_BUTTON), "Cannot find and click 'clear history' button", 10);
+        this.waitForElementAndClick(By.id(POPUP_OK_BUTTON), "Cannot find ok button", 5);
     }
 
 
