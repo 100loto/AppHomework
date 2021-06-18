@@ -90,35 +90,6 @@ public class ArticlePageObject extends MainPageObject{
                 "Cannot find Test folder",
                 10
         );
-
-
-
-
-
-
-
-
-        this.waitForElementAndClick(
-                By.id(ADD_TO_MY_LIST_OVERLAY),
-                "Cannot find GOT_IT button",
-                5
-        );
-        this.waitForElementAndClear(
-                By.id(MY_LIST_NAME_INPUT),
-                "Cannot find text input to set folder name",
-                5
-        );
-        this.waitForElementAndSendKeys(
-                By.id(MY_LIST_NAME_INPUT),
-                name_of_folder,
-                "Cannot put text in yo thr input for set folder name",
-                5
-        );
-        this.waitForElementAndClick(
-                By.id(MY_LIST_OK_BUTTON),
-                "Cannot find ok button",
-                5
-        );
     }
 
     public void closeArticle()
