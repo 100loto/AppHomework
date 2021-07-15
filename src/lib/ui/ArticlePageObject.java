@@ -10,14 +10,14 @@ public class ArticlePageObject extends MainPageObject{
             FOLDER_BY_NAME_TPL = "//*[@text='{FOLDER_NAME}']";
 
     private static final String
-            TITLE = "org.wikipedia:id/view_page_title_text",
-            FOOTER_ELEMENT = "//*[@text='View page in browser']",
-            OPTIONS_BUTTON = "//android.widget.ImageView[@content-desc='More options']",
-            OPTIONS_ADD_TO_MY_LIST_BUTTON = "/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.ListView/android.widget.LinearLayout[3]/android.widget.RelativeLayout/android.widget.TextView",
-            ADD_TO_MY_LIST_OVERLAY = "org.wikipedia:id/onboarding_button",
-            MY_LIST_NAME_INPUT = "org.wikipedia:id/text_input",
-            MY_LIST_OK_BUTTON = "android:id/button1",
-            CLOSE_ARTICLE_BUTTON = "//android.widget.ImageButton[@content-desc='Navigate up']";
+            TITLE = "id:org.wikipedia:id/view_page_title_text",
+            FOOTER_ELEMENT = "xpath://*[@text='View page in browser']",
+            OPTIONS_BUTTON = "xpath://android.widget.ImageView[@content-desc='More options']",
+            OPTIONS_ADD_TO_MY_LIST_BUTTON = "xpath:/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.ListView/android.widget.LinearLayout[3]/android.widget.RelativeLayout/android.widget.TextView",
+            ADD_TO_MY_LIST_OVERLAY = "id:org.wikipedia:id/onboarding_button",
+            MY_LIST_NAME_INPUT = "id:org.wikipedia:id/text_input",
+            MY_LIST_OK_BUTTON = "id:android:id/button1",
+            CLOSE_ARTICLE_BUTTON = "xpath://android.widget.ImageButton[@content-desc='Navigate up']";
 
 
 
@@ -32,7 +32,7 @@ public class ArticlePageObject extends MainPageObject{
     public void swipeToFooter()
     {
         this.swipeUpToFindElement(
-                By.xpath(FOOTER_ELEMENT),
+                (FOOTER_ELEMENT),
                 "Cannot find the end of article",
                 20
         );
@@ -41,33 +41,33 @@ public class ArticlePageObject extends MainPageObject{
     public void addArticleToMyList(String name_of_folder)
     {
         this.waitForElementAndClick(
-                By.xpath(OPTIONS_BUTTON),
+                (OPTIONS_BUTTON),
                 "Cannot find add_to_bm button",
                 10
         );
         this.waitForElementAndClick(
-                By.xpath(OPTIONS_ADD_TO_MY_LIST_BUTTON),
+                (OPTIONS_ADD_TO_MY_LIST_BUTTON),
                 "Cannot find option to add read_list",
                 10
         );
         this.waitForElementAndClick(
-                By.id(ADD_TO_MY_LIST_OVERLAY),
+                (ADD_TO_MY_LIST_OVERLAY),
                 "Cannot find GOT_IT button",
                 5
         );
         this.waitForElementAndClear(
-                By.id(MY_LIST_NAME_INPUT),
+                (MY_LIST_NAME_INPUT),
                 "Cannot find text input to set folder name",
                 5
         );
         this.waitForElementAndSendKeys(
-                By.id(MY_LIST_NAME_INPUT),
+                (MY_LIST_NAME_INPUT),
                 name_of_folder,
                 "Cannot put text in yo thr input for set folder name",
                 5
         );
         this.waitForElementAndClick(
-                By.id(MY_LIST_OK_BUTTON),
+                (MY_LIST_OK_BUTTON),
                 "Cannot find ok button",
                 5
         );
@@ -76,17 +76,17 @@ public class ArticlePageObject extends MainPageObject{
     public void addArticleToCreatedMyList(String name_of_folder)
     {
         this.waitForElementAndClick(
-                By.xpath(OPTIONS_BUTTON),
+                (OPTIONS_BUTTON),
                 "Cannot find add_to_bm button",
                 10
         );
         this.waitForElementAndClick(
-                By.xpath(OPTIONS_ADD_TO_MY_LIST_BUTTON),
+                (OPTIONS_ADD_TO_MY_LIST_BUTTON),
                 "Cannot find option to add read_list",
                 10
         );
         this.waitForElementAndClick(
-                By.xpath(FOLDER_BY_NAME_TPL.replace("FOLDER_NAME", name_of_folder)),
+                (FOLDER_BY_NAME_TPL.replace("FOLDER_NAME", name_of_folder)),
                 "Cannot find Test folder",
                 10
         );
@@ -95,7 +95,7 @@ public class ArticlePageObject extends MainPageObject{
     public void closeArticle()
     {
         this.waitForElementAndClick(
-                By.xpath(CLOSE_ARTICLE_BUTTON),
+                (CLOSE_ARTICLE_BUTTON),
                 "Cannot close article, cannot find X link",
                 20
         );
@@ -104,14 +104,14 @@ public class ArticlePageObject extends MainPageObject{
     public void assertTitlePresentInstantly()
     {
     this.assertElementPresent(
-            By.id(TITLE),
+            (TITLE),
             "Article title not found instantly"
             );
     }
 
     public String saveArticleTitle()
     {
-        String article_title = this.waitForElementAndGetAttribute(By.id(TITLE), "text", "Cannot find title of article", 15);
+        String article_title = this.waitForElementAndGetAttribute((TITLE), "text", "Cannot find title of article", 15);
         return article_title;
     }
 

@@ -11,35 +11,18 @@ import java.net.URL;
 
 public class CoreTestCase extends TestCase {
 
+    private static final String PLATFORM_IOS = "ios";
+    private static final String PLATFORM_ANDROID = "android";
+
     protected AppiumDriver driver;
     private static String AppiumURL = "http://127.0.0.1:4723/wd/hub";
 
-    private String class_PN = "Android";
-    private String class_DN = "HONOR_AUTO";
-    private String class_PV = "8";
-    private String class_AP = "org.wikipedia";
-    private String class_AA = ".main.MainActivity";
-    private String class_APP = "/Users/a.vagin/Desktop/JavaAppium/AppHomework/apks/org.wikipedia.apk";
-    private String class_AT = "Appium";
-
     @Override
-    protected void setUp() throws Exception
-    {
+    protected void setUp() throws Exception {
         super.setUp();
-        DesiredCapabilities capabilities = new DesiredCapabilities();
-
-        System.out.println("Start Session");
-
-        capabilities.setCapability("platformName",class_PN);
-        capabilities.setCapability("deviceName",class_DN);
-        capabilities.setCapability("platformVersion",class_PV);
-        capabilities.setCapability("automationName",class_AT);
-        capabilities.setCapability("appPackage",class_AP);
-        capabilities.setCapability("appActivity",class_AA);
-        capabilities.setCapability("app",class_APP);
-
+        DesiredCapabilities capabilities = this.getCapabilitiesByPlatformEnv();
         driver = new AndroidDriver(new URL(AppiumURL), capabilities);
-        driver.rotate(ScreenOrientation.PORTRAIT);
+        this.rotateScreenPortrait();
 
 //        waitForElementAndClick(
 //                By.id("org.wikipedia:id/fragment_onboarding_skip_button"),
@@ -50,25 +33,44 @@ public class CoreTestCase extends TestCase {
     }
 
     @Override
-    protected void tearDown() throws Exception
-    {
+    protected void tearDown() throws Exception {
         System.out.println("Finish session");
         driver.quit();
 
         super.tearDown();
     }
 
-    protected void rotateScreenPortrait()
-    {
+    protected void rotateScreenPortrait() {
         driver.rotate(ScreenOrientation.PORTRAIT);
     }
-    protected void rotateScreenLandscape()
-    {
+
+    protected void rotateScreenLandscape() {
         driver.rotate(ScreenOrientation.LANDSCAPE);
     }
 
-    protected void backgroundApp(int seconds)
-    {
+    protected void backgroundApp(int seconds) {
         driver.runAppInBackground(seconds);
+    }
+
+    private DesiredCapabilities getCapabilitiesByPlatformEnv() throws Exception {
+        String platform = System.getenv("PLATFORM");
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+        if (platform.equals(PLATFORM_ANDROID)) {
+            capabilities.setCapability("platformName", "Android");
+            capabilities.setCapability("deviceName", "HONOR_AUTO");
+            capabilities.setCapability("platformVersion", "8");
+            capabilities.setCapability("automationName", "Appium");
+            capabilities.setCapability("appPackage", "org.wikipedia");
+            capabilities.setCapability("appActivity", ".main.MainActivity");
+            capabilities.setCapability("app", "/Users/a.vagin/Desktop/JavaAppium/AppHomework/apks/org.wikipedia.apk");
+        } else if (platform.equals(PLATFORM_IOS)) {
+            capabilities.setCapability("platformName", "IOS");
+            capabilities.setCapability("deviceName", "iPhone 12");
+            capabilities.setCapability("platformVersion", "14.5");
+            capabilities.setCapability("app", "/Users/a.vagin/Desktop/JavaAppium/AppHomework/apks/Wikipedia.app");
+        } else {
+            throw new Exception("Cannot get run platform from env variable. Platform value " + platform);
+        }
+        return capabilities;
     }
 }
